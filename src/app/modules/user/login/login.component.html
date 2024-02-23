@@ -1,0 +1,53 @@
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-4 bg-white rounded p-3 shadow-sm">
+      <h5 class="text-center">Login</h5>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3 mt-3">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" formControlName="username" id="username" placeholder="jack.sparrow@pirates.com"
+            name="username"
+            [ngClass]="{ 'is-invalid': formControl['username'].dirty && formControl['username'].errors }">
+          <div *ngIf="formControl['username'].dirty && formControl['username'].errors" class="invalid-feedback">
+            <div *ngIf="formControl['username'].errors['required']">Username is required</div>
+            <div *ngIf="formControl['username'].errors['minlength'] || formControl['username'].errors['maxlength']">
+              {{ validation.username.lengthMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" formControlName="password" id="pwd" placeholder="**********"
+            name="pswd" autocomplete="on"
+            [ngClass]="{ 'is-invalid': formControl['password'].dirty  && formControl['password'].errors }">
+          <div *ngIf="formControl['password'].dirty && formControl['password'].errors" class="invalid-feedback">
+            <div *ngIf="formControl['password'].errors['required']">Password is required</div>
+            <div *ngIf="formControl['password'].errors['minlength'] || formControl['password'].errors['maxlength']">
+              {{ validation.password.lengthMessage }}
+            </div>
+          </div>
+        </div>
+        <div class="form-check mb-3">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" formControlName="remember" name="remember"> Remember me
+          </label>
+        </div>
+
+        <div class="d-grid col-12 mx-auto">
+          <button type="submit" [disabled]="loginForm.invalid || submitted" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+
+      <div class="mt-1 text-end">
+        <a href="user/forgot-password" class="btn btn-link p-0">Forgot Password</a>
+      </div>
+      <hr/>
+      <div class="mt-3 text-center">
+        <span>Don't have an account yet?</span> 
+        <a href="/user/signup" class="btn btn-link" role="button">Signup</a>
+      </div>
+
+    </div>
+  </div>
+</div>
