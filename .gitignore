@@ -1,0 +1,15 @@
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+.angular
+
+# Dependencies
+/node_modules
