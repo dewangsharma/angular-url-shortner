@@ -1,0 +1,9 @@
+@import 'styles/variables.scss';
+@import './app/app.component.scss';
+@import '/node_modules/bootstrap/scss/bootstrap';
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
