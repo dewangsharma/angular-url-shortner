@@ -1,27 +1,17 @@
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiUsers } from 'src/app/services/api.users';
 import {
-  BehaviorSubject,
   Subject,
   catchError,
   filter,
   finalize,
-  find,
   map,
   of,
   switchMap,
-  take,
   tap,
 } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { AuthenticationRes } from 'src/app/types/responses/authentication.res';
 import { AuthenticationReq } from 'src/app/types/requests/authentication.req';
 import { Router } from '@angular/router';
 
@@ -57,6 +47,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     ],
     remember: [''],
   });
+
+  get formControl(): { [key: string]: AbstractControl } {
+    return this.loginForm.controls;
+  }
+
   //#endregion
 
   data$ = new Subject<AuthenticationReq>();
@@ -72,26 +67,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('onInit');
     if (this.authService.user) {
       this.router.navigate(['/']);
     }
-
     this.data$
       .pipe(
         filter(() => !this.submitted),
         tap(() => (this.submitted = true)),
         switchMap((reqData: AuthenticationReq) =>
           this.apiUser.login(reqData).pipe(
-            map((x) => {
-              console.log(x);
+            map((res) => {
+              this.authService.loginIsSuccess(res);
+              this.router.navigate(['/']);
             }),
             catchError((error) => {
-              console.log(error);
               return of(error);
             }),
             finalize(() => {
-              console.log('finalize inside');
               this.submitted = false;
             })
           )
@@ -101,12 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('Destroy');
     if (this.data$) this.data$.unsubscribe();
-  }
-
-  get formControl(): { [key: string]: AbstractControl } {
-    return this.loginForm.controls;
   }
 
   onSubmit(): void {

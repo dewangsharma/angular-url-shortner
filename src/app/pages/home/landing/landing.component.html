@@ -1,10 +1,64 @@
-<p>landing works!</p>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12 p-1">
+      <h5 class="text-left">Generate shortened URL</h5>
+      <form [formGroup]="urlForm" (ngSubmit)="onSubmit()">
+        <div class="col-lg-4 mb-3 mt-3">
+          <label for="url">Url:</label>
+          <input type="text" class="form-control" formControlName="url" id="url"
+            placeholder="https://example.com/products/abc" name="url"
+            [ngClass]="{ 'is-invalid': formControl['url'].dirty && formControl['url'].errors }">
+          <div *ngIf="formControl['url'].dirty && formControl['url'].errors" class="invalid-feedback">
+            <div *ngIf="formControl['url'].errors['required']">URL is required</div>
+            <div *ngIf="formControl['url'].errors['minlength'] || formControl['url'].errors['maxlength']">
+              {{ validation.url.lengthMessage }}
+            </div>
+          </div>
+        </div>
 
-<div class="container">
-    <h1>DD</h1>
-    <div class="row">
-        <div class="col"> C1 </div>
-        <div class="col"> C2 </div>
-        <div class="col"> C3 </div>
+        <div class="d-grid col-4">
+          <button type="submit" [disabled]="urlForm.invalid || submitted" class="btn btn-primary">Generate</button>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="col-12 p-1">
+      <button class="btn btn-outline-secondary btn-sm" (click)="refresh()"> Refresh </button>
+
+      <div class="table-responsive" *ngIf="urls$ | async as urls">
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th class="col-xs-6">
+                Actual Url
+              </th>
+              <th class="col-xs-2">
+                Alias
+              </th>
+              <th class="col-xs-4">
+                Shortened Url
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let url of urls">
+              <td>
+                {{ url.actual }}
+              </td>
+              <td>
+                {{ url.shortened }}
+              </td>
+              <td>
+                <a href="{{appLink}}/{{url.shortened}}" target="_blank">
+                  {{appLink}}/{{url.shortened}} </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
+    </div>
+  </div>
 </div>

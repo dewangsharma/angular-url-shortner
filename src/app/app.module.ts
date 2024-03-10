@@ -7,9 +7,10 @@ import { HomeModule } from './pages/home/home.module';
 import { HeaderModule } from './modules/header/header.module';
 import { UserModule } from './modules/user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ApiUsers } from './services/api.users';
 import { AuthService } from './services/auth.service';
+import { JwtInterceptor } from './helpers/jwt-interceptor';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AuthService } from './services/auth.service';
     HttpClientModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },       
     ApiUsers
     // AuthService
   ],

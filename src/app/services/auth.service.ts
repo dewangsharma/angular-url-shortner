@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+ 
   private userSubject: BehaviorSubject<AuthenticationRes | null>;
   public user: Observable<AuthenticationRes | null>;
 
   constructor(private router: Router) {
+    
     this.userSubject = new BehaviorSubject(
       JSON.parse(localStorage.getItem('user')!)
     );

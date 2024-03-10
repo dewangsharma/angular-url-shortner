@@ -1,1 +1,73 @@
-<p>signup works!</p>
+<div class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 bg-white rounded p-3 shadow-sm">
+        <h5 class="text-center">Signup</h5>
+  
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3 mt-3">
+            <label for="firstname">First name:</label>
+            <input type="text" class="form-control" formControlName="firstname" id="firstname"
+              placeholder="Jack" name="firstname"
+              [ngClass]="{ 'is-invalid': formControl['firstname'].dirty && formControl['firstname'].errors }">
+            <div *ngIf="formControl['firstname'].dirty && formControl['firstname'].errors" class="invalid-feedback">
+              <div *ngIf="formControl['firstname'].errors['required']">First name is required</div>
+              <div *ngIf="formControl['firstname'].errors['minlength'] || formControl['firstname'].errors['maxlength']">
+                {{ validation.firstname.lengthMessage }}
+              </div>
+            </div>
+          </div>
+  
+          <div class="mb-3 mt-3">
+            <label for="pwd">Last name:</label>
+            <input type="text" class="form-control" formControlName="lastname" id="lastname" placeholder="Sparrow"
+              name="lastname" autocomplete="on"
+              [ngClass]="{ 'is-invalid': formControl['lastname'].dirty  && formControl['lastname'].errors }">
+            <div *ngIf="formControl['lastname'].dirty && formControl['lastname'].errors" class="invalid-feedback">
+              <div *ngIf="formControl['lastname'].errors['required']">Last name is required</div>
+              <div *ngIf="formControl['lastname'].errors['minlength'] || formControl['lastname'].errors['maxlength']">
+                {{ validation.lastname.lengthMessage }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 mt-3">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" formControlName="email" id="email"
+              placeholder="jack.sparrow@pirates.com" name="email"
+              [ngClass]="{ 'is-invalid': formControl['email'].dirty && formControl['email'].errors }">
+            <div *ngIf="formControl['email'].dirty && formControl['email'].errors" class="invalid-feedback">
+              <div *ngIf="formControl['email'].errors['required']">email is required</div>
+              <div *ngIf="formControl['email'].errors['minlength'] || formControl['email'].errors['maxlength']">
+                {{ validation.email.lengthMessage }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 mt-3">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" formControlName="password" id="pwd" placeholder="**********"
+              name="pswd" autocomplete="on"
+              [ngClass]="{ 'is-invalid': formControl['password'].dirty  && formControl['password'].errors }">
+            <div *ngIf="formControl['password'].dirty && formControl['password'].errors" class="invalid-feedback">
+              <div *ngIf="formControl['password'].errors['required']">Password is required</div>
+              <div *ngIf="formControl['password'].errors['minlength'] || formControl['password'].errors['maxlength']">
+                {{ validation.password.lengthMessage }}
+              </div>
+            </div>
+          </div>
+  
+          <div class="d-grid col-12 mx-auto">
+            <button type="submit" [disabled]="signupForm.invalid || submitted" class="btn btn-primary">Signup</button>
+          </div>
+
+        </form>
+  
+        <hr />
+        <div class="mt-3 text-center">
+          <span class="text-secondary">Already have an account yet? </span>
+          <a href="/user/login" class="btn btn-link p-0 m-0 text-info" role="button">Login</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
